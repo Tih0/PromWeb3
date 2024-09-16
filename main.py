@@ -86,16 +86,17 @@ async def main(low_prom, high_prom):
                 if now >= target_time:
                     target_time += timedelta(days=1)
                 delay_seconds = (target_time - now).total_seconds()
-                print(f'Next run at: {target_time} (UTC+2)')
-                send_delay(f'Next run at: {target_time} (UTC+2)')
+                print(f' Next run at: {target_time} (UTC+2)')
+                send_delay(f'⏰ Next run at: {target_time} (UTC+2)')
                 await asyncio.sleep(delay_seconds)
+                send_delay(f'🚀 Start transactions of group: {group_accounts}..')
             mas_counter = [0] * len(address)
             current_count = 0
             while current_count <= max(mas_counter):
                 tasks = []
                 for i in range(len(address)):
                     if current_count == 0:
-                        mas_counter[i] = random.randint(4, 7)
+                        mas_counter[i] = random.randint(4, 5)
                     if current_count != mas_counter[i]:
                         tasks.append(transactions[i].txYourself(k, delay_min, delay_max, start_delay_min, start_delay_max, low_prom, high_prom))
                 await asyncio.gather(*tasks)
